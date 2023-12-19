@@ -2,6 +2,7 @@ const express = require('express');
 const connection = require('../connection');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+// mails to the user if they forgot their password
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const auth = require('../services/authentification');
@@ -74,6 +75,7 @@ router.post('/login', (req, res) => {
         }
     })
 });
+// syntax for nodemailer
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -115,8 +117,8 @@ router.post('/forgotpassword', (req, res) => {
         }
     })
 });
-router.get('/getuser', auth.authenticateToken, (req, res) => {
 
+router.get('/getuser', auth.authenticateToken, (req, res) => {
     const query = "select * from user";
     connection.query(query, (err, results) => {
         if (!err) {
@@ -143,7 +145,6 @@ router.patch('/updateuser', auth.authenticateToken, (req, res) => {
         }
     })
 });
-
 router.get('/checkToken', auth.authenticateToken, (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
