@@ -1,5 +1,5 @@
 const express = require('express');
-var cors = require('cors');
+const cors = require('cors');
 const connection = require('./connection');
 const userRoute = require('./routes/user');
 const categoryRoute = require('./routes/service');
